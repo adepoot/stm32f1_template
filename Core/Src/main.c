@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "project/project.h"
 
 /* USER CODE END Includes */
 
@@ -86,7 +87,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-
+  print_helloworld();
   /* USER CODE END 2 */
 
   /* Infinite loop */

@@ -1,6 +1,9 @@
 # Reference: https://github.com/prtzl/Embedded_videos/blob/master/046_BUILDING-PT5-cmake/sample-f407vg/CMakeLists.txt
-# Template CMakeLists.txt configuration for STM32 MCUS
 cmake_minimum_required(VERSION 3.24)
+
+include(./gcc-arm-none-eabi.cmake)
+
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 # ##############################################################################
 # Edit your MCU information up to the next border
 # The correct family, model, parameters ... can be found in the CubeMX Makefile
@@ -26,6 +29,7 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES})
 set(CMAKE_CXX_EXTENSIONS ON)
 
 # Headers

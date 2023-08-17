@@ -2,7 +2,25 @@ BUILD_DIR ?= build
 BUILD_SYSTEM = Unix Makefiles
 BUILD_TYPE ?= Debug
 
-build: cmake
+RUNNING_IN_CONTAINER := false
+ifneq (,$(wildcard /etc/alpine-release))
+	RUNNING_IN_CONTAINER := true
+endif
+
+BUILD_CMD := $(if $(filter $(RUNNING_IN_CONTAINER), true), build-local, build-via-container)
+
+build: echo-env $(BUILD_CMD)
+
+echo-env:
+ifeq ($(RUNNING_IN_CONTAINER), true)
+	@echo "Running in a container; building with the local tools..."
+else
+	@echo "Not running in a container; using a container for building..."
+endif
+
+################################## Local ##################################
+
+build-local: clean cmake
 	$(MAKE) -C $(BUILD_DIR) --no-print-directory
 
 cmake: $(BUILD_DIR)/Makefile
@@ -49,8 +67,8 @@ CONTAINER_RUN = docker run \
 					-w $(WORKDIR_PATH) \
 					$(IMAGE_NAME)
 
-build-container: $(NEED_IMAGE)
-	$(CONTAINER_RUN) /bin/sh -lc 'make -j16'
+build-via-container: clean $(NEED_IMAGE)
+	$(CONTAINER_RUN) /bin/sh -lc 'make build-local -j16'
 
 shell: $(NEED_IMAGE)
 	$(CONTAINER_RUN) /bin/sh -l

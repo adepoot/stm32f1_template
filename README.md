@@ -2,7 +2,18 @@
 
 This project is a template for setting up a simple STM32 project environment, using `make`, `cmake` and `Docker`.
 
-The original project files where generated using [STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html).
+The original project files were generated using [STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html).
+Additional setup files were inspired by [this GitHub project](https://github.com/prtzl/stm32).
+
+# Prerequisites
+
+- [STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html)
+- [CMake](https://cmake.org/)
+- [Make](https://www.gnu.org/software/make/)
+- [Docker](https://www.docker.com/)
+- [stlink-tools](https://github.com/stlink-org/stlink)
+- (optional) [Dev Containers (VS Code extension)](https://code.visualstudio.com/docs/devcontainers/containers)
+- (optional) [Cortex-Debug (VS Code extension)](https://github.com/Marus/cortex-debug)
 
 # Project structure
 
@@ -41,7 +52,7 @@ used to create the image which contains the necessary tools to build the project
 contains info for compiler and linker, does not necessarily need to be changed.
 
 `Makefile`
-contains different commands to build the project.
+contains different commands to build and flash the project.
 
 
 # Development
@@ -115,3 +126,12 @@ deletes the `build` folder.
 make clean-all
 ```
 deletes the `build` folder and removes the Docker container and image.
+
+# Flashing
+
+For flashing the application to your device, a `make` goal has been added.
+
+```
+make flash
+```
+builds and flashed the built `.bin` file to the device using the `st-flash` command from [STLink Tools](https://github.com/stlink-org/stlink).

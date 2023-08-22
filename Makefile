@@ -1,3 +1,4 @@
+PROJECT_NAME ?= bluepill_makefile-example
 BUILD_DIR ?= build
 BUILD_SYSTEM = Unix Makefiles
 BUILD_TYPE ?= Debug
@@ -84,3 +85,8 @@ clean-image:
 	docker image rm $(IMAGE_NAME) 2> /dev/null > /dev/null || true
 
 clean-all: clean clean-image
+
+################################## Flashing ##################################
+
+flash: build
+	st-flash --flash=128k --reset write $(BUILD_DIR)/$(PROJECT_NAME).bin 0x08000000

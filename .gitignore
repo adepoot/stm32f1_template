@@ -1,5 +1,9 @@
 build
-.vscode
+
+# Exclude .vscode folder, except for files marked with `template_`
+!.vscode
+.vscode/*
+!.vscode/template_*
 
 #settings
 .settings/

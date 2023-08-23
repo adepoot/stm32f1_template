@@ -88,5 +88,21 @@ clean-all: clean clean-image
 
 ################################## Flashing ##################################
 
+discover:
+	st-info --probe
+
 flash: build
 	st-flash --flash=128k --reset write $(BUILD_DIR)/$(PROJECT_NAME).bin 0x08000000
+
+STLINK_SERIAL = $(shell st-info --probe | grep serial | awk '{print $$2}')
+launch-debug-server:
+	st-util --serial $(STLINK_SERIAL)
+
+GDB_SERVER_PID_ID := $(shell ps -ef | grep "[m]ake launch-debug-server" | awk {'print $$2'})
+stop-debug-server:
+ifeq ($(GDB_SERVER_PID_ID),)
+	@echo "GDB server is not running; nothing to stop"
+else
+	@echo "Stopping GDB server with PID [$(GDB_SERVER_PID_ID)]"
+	kill $(GDB_SERVER_PID_ID)
+endif

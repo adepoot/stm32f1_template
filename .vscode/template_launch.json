@@ -1,0 +1,62 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        // STM32CubeIDE Debug is not yet working. This might work with a valid ST Link device and not a fake one.
+        {
+            "name": "STM32CubeIDE Debug",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/bluepill_makefile-example.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "stlink",
+            "device": "STMF103C8",
+            "interface": "swd",
+            "runToEntryPoint": "main",
+            "preLaunchCommands": ["make build-local"],
+            // "svdFile": "/opt/st/stm32cubeide_1.8.0/plugins/com.st.stm32cube.ide.mcu.productdb.debug_2.0.100.202111231602/resources/cmsis/STMicroelectronics_CMSIS_SVD/STM32F103.svd" // not necessary
+            "swoConfig": {
+                "enabled": true,
+                "cpuFrequency": 72000000,
+                "swoFrequency": 2000000,
+                "source": "probe",
+                "decoders": [
+                    {
+                        "label": "ITM port 0 output",
+                        "type": "console",
+                        "port": 0,
+                        "showOnStartup": true,
+                        "encoding": "ascii"
+                    }
+                ]
+            },
+            "showDevDebugOutput": "raw"
+        },
+        // OpenOCD Debug is not working, the server times out
+        {
+            "name": "OpenOCD Debug",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/bluepill_makefile-example.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "device": "stlink",
+            "configFiles": [
+                "interface/stlink-v2.cfg",
+                "target/stm32f1x_fake.cfg"
+            ],
+            "preLaunchCommands": ["make build-local"],
+            "showDevDebugOutput": "raw"
+        },
+        {
+            "name": "STLINK Tools Debug",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/bluepill_makefile-example.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "external",
+            "gdbTarget": "localhost:4242",
+            "preLaunchTask": "Prepare for debugging",
+            "postDebugTask": "Stop GDB server"
+        }
+    ]
+}

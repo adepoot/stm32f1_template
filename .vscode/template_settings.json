@@ -1,0 +1,6 @@
+{
+    "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+    "cortex-debug.armToolchainPath": "/opt/arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi/bin",
+    "cortex-debug.gdbPath": "/opt/arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi/bin/arm-none-eabi-gdb",
+    "cortex-debug.stutilPath": "/usr/bin/st-util"
+}
